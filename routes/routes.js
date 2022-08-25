@@ -1,7 +1,6 @@
 const router = require('express').Router();
 const ejs = require('ejs');
  const posts = require('../config/database.js');
- const comments = require('../config/database.js').Comment;
 
 
 
@@ -14,6 +13,9 @@ router.post("/", (req,res) => {
     posts.create({ username:req.body.username, post:req.body.content,postType:req.body.picker, date:postTime}, (err)=>{
         if(!err){
             res.redirect("/")
+        }else{
+            console.log(err)
+            res.redirect("/")
         }
     })
 })
@@ -23,7 +25,7 @@ router.post("/comment", (req,res) => {
 
     posts.findOneAndUpdate(
         { _id: req.body.postID }, 
-        { $push: { comments: req.body.comment } },
+        { $push: { comments: {date: commentTime, postComment:req.body.comment} } },
         function (error, item) {
             if (error) {
                 console.log(error);

@@ -13,12 +13,14 @@ async function main() {
 
 
 // Creates simple schema for a posts.
+const customValidation= {type: String, trim: true,required: true};
+
 const postSchema = new mongoose.Schema({
-  username: String,
-  post: String,
-  postType:String,
+  username: customValidation,
+  post: customValidation,
+  postType:customValidation,
   date:Date,
-  comments:[]
+  comments:[{date:Date, postComment:customValidation}]
 });
 
 const Post = mongoose.model("Post", postSchema);

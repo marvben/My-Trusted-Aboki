@@ -1,40 +1,35 @@
 <%- include('partials/header'); -%>
+<section class="container mt-5 mb-5">
+  <form action="/" method="post">
+    <div class="mb-3">
+      <input type="text" class="form-control" name="username" placeholder="Username" required>
+    </div>
+    <div class="mb-3">
+      <select class="form-select " aria-label="Default select example" name="picker">
+        <option selected="Buy">Buy</option>
+        <option value="Sell">Sell</option>
+        <option value="Both">Both</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <textarea class="form-control" name="content" rows="3" name="content" placeholder="Enter your post"
+        required></textarea>
+    </div>
+    <div class="col-auto">
+      <button type="submit" class="btn btn-primary mb-3">Submit Post</button>
+    </div>
+  </form>
+</section>
 
-<form action="/" method="post" class="container mt-5">
-  <div class="mb-3">
-    <input type="text" class="form-control" name="username" placeholder="Username">
-  </div>
-  <div class="mb-3">
-    <select class="form-select " aria-label="Default select example" name="picker">
-      <option selected="Buy">Buy</option>
-      <option value="Sell">Sell</option>
-      <option value="Both">Both</option>
-    </select>
-  </div>
-  <div class="mb-3">
-    <textarea class="form-control" name="content" rows="3" name="content" placeholder="Enter your post"></textarea>
-  </div>
-  <div class="col-auto">
-    <button type="submit" class="btn btn-primary mb-3">Submit Post</button>
-  </div>
-
-</form>
-
-
-<section class="container">
+<section class="container post-container d-flex flew-column justify-content-center align-items-center">
   <% posts.forEach( dataItem => { %>
-  <div class="container-fluid">
+  <div class="container-fluid bg-warning rounded p-3 mb-5 ">
     <h4> Name: <%=dataItem.username %> </h4>
     <p> content: <%=dataItem.post %> </p>
     <p>Published at: <%= new Date(dataItem.date).toLocaleString("en-US",{timeStyle:"short",dateStyle:"medium"})%></p>
     <p>I want: <%= dataItem.postType ? dataItem.postType :"N/A" %></p>
-    <ol class="container">
-    <% dataItem.comments.forEach(comment=>{ %> 
-      <li>Reply: <%=comment%>  </li>
-      <% })%> 
-    </ol>
-    <form action="/comment" method="post" class="commentForm" >
 
+    <form action="/comment" method="post" class="commentForm">
       <div class="mb-3">
         <input type="hidden" name="postID" value="<%=dataItem._id %>">
         <textarea class="form-control" rows="2" name="comment" placeholder="Leave a comment"></textarea>
@@ -42,8 +37,31 @@
       <div class="col-auto">
         <button type="submit" class="btn btn-primary rounded">Reply</button>
       </div>
-
     </form>
+    <div class="container comment-container bg-success rounded p-2 mt-2 text-light">
+      <% dataItem.comments.forEach(comment=>{ %>
+      <form action="/deleteReply" method="post" class="commentReplyForm d-flex align-items-center mb-3">
+        <div class="p-0 m-0 comment-text">
+          <p class="m-0">Reply: <span class="text"><%= comment.postComment %> </span>
+            <span>posted at:
+              <%=  new Date(comment.date).toLocaleString("en-US",{timeStyle:"short",dateStyle:"medium"}) %> 
+            </span>
+          </p>
+        </div>
+        <button class="rounded btn btn-danger mx-2" type="submit">Delete</button>
+        <a class="rounded btn btn-primary  displayEditForm">Edit reply</a>
+      </form>
+
+      <form action="/editReply" method="post" class="editCommentReplyForm mt-3 bg-warning p-3 rounded">
+        <textarea class="form-control editCommentReplyInput" rows="2" value="<%= comment.postComment %>"
+          name="commentEdit" placeholder="Edit a comment"></textarea>
+        <button class="rounded btn btn-light mt-2 " type="submit">Edit</button>
+        <a class="rounded btn btn-light mt-2 hideEditForm" type="submit">Close</a>
+
+      </form>
+
+      <% })%>
+    </div>
   </div>
   <%  }) %>
 </section>
