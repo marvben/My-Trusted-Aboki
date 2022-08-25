@@ -1,12 +1,49 @@
 const router = require('express').Router();
 const ejs = require('ejs');
- const data = require('../config/database.js');
+ const posts = require('../config/database.js');
+ const comments = require('../config/database.js').Comment;
 
 
 
 /**
  * -------------- POST ROUTES ----------------
  */
+
+router.post("/", (req,res) => {
+    const postTime = new Date().toLocaleString("en-US");
+    posts.create({ username:req.body.username, post:req.body.content,postType:req.body.picker, date:postTime}, (err)=>{
+        if(!err){
+            res.redirect("/")
+        }
+    })
+})
+
+router.post("/comment", (req,res) => {
+    const commentTime = new Date().toLocaleString("en-US");
+
+    posts.findOneAndUpdate(
+        { _id: req.body.postID }, 
+        { $push: { comments: req.body.comment } },
+        function (error, item) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log("success", item);
+            }
+            res.redirect("/")
+        }
+    );
+
+
+//     posts.findById(req.body.postID, (err, foundPost)=>{
+//         if(!err){
+//             console.log(foundPost.comments.push(req.body.comment))
+//             res.redirect("/")
+//        }
+//    })
+ 
+
+})
 
  // TODO
  router.post('/login', (req, res, next) => {});
@@ -20,9 +57,9 @@ const ejs = require('ejs');
  */
 
 router.get('/', (req, res) => {
-    data.find({}, (err, items)=>{
+    posts.find({}).sort('date').exec((err, posts)=>{
         if(!err){
-            res.render('home', {data:items});
+            res.render('home', {posts:posts});
        }
    })
    

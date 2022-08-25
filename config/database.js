@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 
 const url = process.env.DB_STRING
 
-console.log(url);
 
 main().catch((err) => console.log(err));
 
@@ -11,22 +10,19 @@ async function main() {
   await mongoose.connect(url);
 }
 
-// Creates simple schema for a User.
-const UserSchema = new mongoose.Schema({
+
+
+// Creates simple schema for a posts.
+const postSchema = new mongoose.Schema({
   username: String,
-  password: String,
+  post: String,
+  postType:String,
+  date:Date,
+  comments:[]
 });
 
-const User = mongoose.model("User", UserSchema);
-
-User.create({ username: "Benjamin", password: "Nwabunwann" }, function (err) {
-  if (err) {
-    console.log(err);
-  } else {
-    console.log("Saved");
-  }
-});
+const Post = mongoose.model("Post", postSchema);
 
 // Expose the connection
 
-module.exports = User;
+module.exports = Post;

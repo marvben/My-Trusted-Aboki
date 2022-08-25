@@ -1,7 +1,52 @@
 <%- include('partials/header'); -%>
 
-<% data.forEach( dataItem => { %>
-    <h1> Hello <%=dataItem.username %> </h1>
-<%  }) %>
+<form action="/" method="post" class="container mt-5">
+  <div class="mb-3">
+    <input type="text" class="form-control" name="username" placeholder="Username">
+  </div>
+  <div class="mb-3">
+    <select class="form-select " aria-label="Default select example" name="picker">
+      <option selected="Buy">Buy</option>
+      <option value="Sell">Sell</option>
+      <option value="Both">Both</option>
+    </select>
+  </div>
+  <div class="mb-3">
+    <textarea class="form-control" name="content" rows="3" name="content" placeholder="Enter your post"></textarea>
+  </div>
+  <div class="col-auto">
+    <button type="submit" class="btn btn-primary mb-3">Submit Post</button>
+  </div>
+
+</form>
+
+
+<section class="container">
+  <% posts.forEach( dataItem => { %>
+  <div class="container-fluid">
+    <h4> Name: <%=dataItem.username %> </h4>
+    <p> content: <%=dataItem.post %> </p>
+    <p>Published at: <%= new Date(dataItem.date).toLocaleString("en-US",{timeStyle:"short",dateStyle:"medium"})%></p>
+    <p>I want: <%= dataItem.postType ? dataItem.postType :"N/A" %></p>
+    <ol class="container">
+    <% dataItem.comments.forEach(comment=>{ %> 
+      <li>Reply: <%=comment%>  </li>
+      <% })%> 
+    </ol>
+    <form action="/comment" method="post" class="commentForm" >
+
+      <div class="mb-3">
+        <input type="hidden" name="postID" value="<%=dataItem._id %>">
+        <textarea class="form-control" rows="2" name="comment" placeholder="Leave a comment"></textarea>
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary rounded">Reply</button>
+      </div>
+
+    </form>
+  </div>
+  <%  }) %>
+</section>
+
 
 <%- include('partials/footer'); -%>
