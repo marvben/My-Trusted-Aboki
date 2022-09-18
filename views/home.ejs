@@ -1,0 +1,47 @@
+<%- include('partials/header'); -%>
+<section class="container  mt-5 mb-5">
+  <h1>Quote for today!</h1>
+ <h3 class="display-4"><%= todayQuote.text %></h3> 
+ <p class="lead"><%= todayQuote.author %></p> 
+</section>
+
+<section class="container post-container d-flex flew-column justify-content-center align-items-center mt-5 mb-5">
+  <% posts.forEach( dataItem => { %>
+  <div class="container-fluid bg-warning rounded p-3 mb-5 ">
+    <div class="postTextContainer bg-light rounded p-1  ">
+      <h4> <%=dataItem.title %> </h4>
+      <p><%=dataItem.content.slice(0,250) %> <a class="text-primary"
+          href="/<%=dataItem.title %>/<%=dataItem._id %>">...Read more</a></p>
+      <p>Published at: <%= new Date(dataItem.date).toLocaleString("en-US",{timeStyle:"short",dateStyle:"medium"})%></p>
+      <p>I want: <%= dataItem.postType ? dataItem.postType :"N/A" %></p>
+      <input class="hiddenInput" type="hidden" name="nameCommentId" value="<%=dataItem._id %>">
+    </div>
+
+    <% if (dataItem.comments.length>0){  %>
+    <div class="container repliesSection bg-dark rounded p-1 my-3">
+      <p class="text-warning mb-2">Comments:</p>
+
+      <% dataItem.comments.forEach( comment => { %>
+      <div class="text-light p-0 my-1 ">
+        <span><%= comment.postComment %> </span>
+        <span class="mx-3 text-warning">Replied at:
+          <%= new Date(comment.date).toLocaleString("en-US",{timeStyle:"short",dateStyle:"medium"})%></span>
+        <span span class="">
+          Comment by: <span class="mx-2 text-primary"><%=  comment.username || "John Doe" %></span>
+        </span>
+
+      </div>
+        <%  }) %>
+      
+      </div>
+      <% }%>
+
+      <button class="btn btn-success reply-button mt-2 replyButton">Reply</button>
+      <div class="replyFormContainer"></div>
+
+    </div>
+    <%  }) %>
+</section>
+
+
+<%- include('partials/footer'); -%>

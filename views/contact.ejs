@@ -1,0 +1,26 @@
+<%- include('partials/header'); -%>
+<section class="container mt-5 mb-5 p-5">
+    <form action="contactForm" method="post" class="form-control p-5">
+        <label class="container-fluid p-0 mb-2" for="nameId">Please enter full name:
+            <input class="form-control" type="text" name="name" id="nameId">
+        </label>
+        <label class="container-fluid p-0 mb-2" for="emailId">Please enter full email:
+            <input class="form-control" type="email" name="email" id="emailId">
+        </label>
+        <label class="container-fluid p-0 mb-2" for="telId">Please enter full tel:
+            <input class="form-control" type="tel" name="tel" id="telId">
+        </label>
+
+        <textarea class="form-control" name="content" rows="3" name="content" placeholder="Enter your Message"
+            required></textarea>
+        <div class="col-auto mt-2">
+            <button type="submit" class="btn btn-primary  p-2">Send Message</button>
+        </div>
+         <label class=" p-0 mb-2" for="fileId">Please attach your file:
+            <input form-control type="file" name="file" id="fileId">
+        </label>
+       
+
+    </form>
+</section>
+<%- include('partials/footer'); -%>
