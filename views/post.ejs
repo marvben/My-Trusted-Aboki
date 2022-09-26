@@ -1,64 +1,74 @@
 <%- include('partials/header'); -%>
 
-<section class="container post-container d-flex flew-column justify-content-center align-items-center">
-  <div class="container-fluid bg-warning rounded p-3 mb-5 ">
-    <h1><%=foundPost.title %> </h1>
-    <p><%= foundPost.content%></p>
-    <p>I want: <%= foundPost.postType ? foundPost.postType :"N/A" %></p>
-    <p>Published at: <%= new Date(foundPost.date).toLocaleString("en-US",{timeStyle:"short",dateStyle:"medium"})%></p>
+  <section class="container post-container d-flex flew-column justify-content-center align-items-center">
+    <div class="container-fluid bg-warning rounded p-3 mb-5 ">
+      <h1>
+        <%=foundPost.title %>
+      </h1>
+      <p>
+        <%= foundPost.content%>
+      </p>
+      <p>I want: <%= foundPost.postType ? foundPost.postType :"N/A" %>
+      </p>
+      <p>Published at: <%= new Date(foundPost.date).toLocaleString("en-US",{timeStyle:"short",dateStyle:"medium"})%>
+      </p>
 
-    <% if(foundPost.comments.length > 0)   { %>
-   
-      <div class="container repliesSection bg-dark rounded p-1 my-3">
-        <p class="text-warning mb-2">Comments:</p>
+      <% if(foundPost.comments.length> 0) { %>
 
-       <% for(const comment of foundPost.comments)  { %>
-        <div class="text-light p-0 my-1 ">
-          <span><%= comment.postComment %> </span>
-          <span class="mx-3 text-warning">Replied at:
-            <%= new Date(comment.date).toLocaleString("en-US",{timeStyle:"short",dateStyle:"medium"})%></span>
-          <span span class="">
-            Comment by: <span class="mx-2 text-primary"><%=  comment.username || "John Doe" %></span>
-          </span>
-  
-        </div>
+        <div class="container repliesSection bg-dark rounded p-1 my-3">
+          <p class="text-warning mb-2">Comments:</p>
 
-        <% }%>
+          <% for(const comment of foundPost.comments) { %>
+            <div class="text-light p-0 my-1 ">
+              <span>
+                <%= comment.postComment %>
+              </span>
+              <span class="mx-3 text-warning">Replied at:
+                <%= new Date(comment.date).toLocaleString("en-US",{timeStyle:"short",dateStyle:"medium"})%>
+              </span>
+              <span span class="">
+                Comment by: <span class="mx-2 text-primary">
+                  <%= comment.username || "John Doe" %>
+                </span>
+              </span>
+
+            </div>
+
+            <% }%>
         </div>
 
         <% } %>
 
 
-        <form action="/editPost" method="post" class="editPostForm mt-3 bg-warning p-3 rounded">
-          <input class="form-control mb-1" type="text" name="postTitle" value="<%=foundPost.title %>" required placeholder="Post Tile:" >
-          <textarea class="form-control text-align-left" rows="2" name="postBody"  placeholder="Enter post body:"><%= foundPost.content.trim()%> </textarea>
-          
-          <div class="mb-3">
-            <select class="form-select " aria-label="Default select example" name="picker">
-              <option selected="Buy">Buy</option>
-              <option value="Sell">Sell</option>
-              <option value="Both">Both</option>
-            </select>
-          </div>
-          
-          <input type="hidden" name="postId" value=<%= foundPost._id %> >
-          <button class="rounded btn btn-light mt-2 saveEditButton " type="submit">save</button>
-          <button class="rounded btn btn-primary mt-2 cancelEditButton" >cancel</button>
-      </form>
+          <form action="/editPost" method="post" class="editPostForm mt-3 bg-warning p-3 rounded">
+            <input class="form-control mb-1" type="text" name="postTitle" value="<%=foundPost.title %>" required
+              placeholder="Post Tile:">
+
+            <div class="mb-3">
+              <select class="form-select " aria-label="Default select example" name="picker">
+                <option selected="Buy">Buy</option>
+                <option value="Sell">Sell</option>
+                <option value="Both">Both</option>
+              </select>
+            </div>
+            <textarea class="form-control text-align-left" id="content" rows="2" name="postBody"
+              placeholder="Enter post body:"><%= foundPost.content.trim()%> </textarea>
+            <input type="hidden" name="postId" value=<%=foundPost._id %> >
+            <button class="rounded btn btn-light mt-2 saveEditButton " type="submit">save</button>
+            <a class="rounded btn btn-primary mt-2 cancelEditButton">cancel</a>
+          </form>
+          <button class="btn btn-success postEditButton"> Edit post</button>
+    </div>
+
+  </section>
 
 
-    <button class="btn btn-success postEditButton"> Edit post</button>
-  </div>
- 
-</section>
+  <section class="container post-container d-flex flew-column justify-content-center align-items-center">
+    <div class="container-fluid rounded p-3 mb-5 ">
 
+      <a class="btn btn-success" href="/"> Return home</a>
+    </div>
 
-<section class="container post-container d-flex flew-column justify-content-center align-items-center">
-  <div class="container-fluid rounded p-3 mb-5 ">
+  </section>
 
-<a class="btn btn-success" href="/"> Return home</a>
-</div>
- 
-</section>
-
-<%- include('partials/footer'); -%>
+  <%- include('partials/footer'); -%>

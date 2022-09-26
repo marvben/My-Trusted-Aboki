@@ -1,24 +1,25 @@
 <%- include('partials/header'); -%>
-<section class="container mt-5 mb-5">
-  <form action="/newPost" method="post">
-    <div class="mb-3">
-      <input type="text" maxlength="100" minlength="30" class="form-control" name="title" placeholder="Title" required>
-    </div>
-    <div class="mb-3">
-      <select class="form-select " aria-label="Default select example" name="picker">
-        <option selected="Buy">Buy</option>
-        <option value="Sell">Sell</option>
-        <option value="Both">Both</option>
-      </select>
-    </div>
-    <div class="mb-3">
-      <textarea class="form-control" name="content" rows="3" name="content" placeholder="Enter your post"
-        required></textarea>
-    </div>
-    <div class="col-auto">
-      <button type="submit" class="btn btn-primary mb-3">Submit Post</button>
-    </div>
-  </form>
-</section>
+  <section class="container mt-5 mb-5">
+    <form action="/newPost" method="post">
+      <div class="mb-3">
+        <input type="text" maxlength="100" minlength="30" class="form-control" name="title" placeholder="Title"
+          required>
+      </div>
+      <div class="mb-3">
+        <select class="form-select " aria-label="Default select example" name="picker">
+          <option selected="Buy">Buy</option>
+          <option value="Sell">Sell</option>
+          <option value="Both">Both</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <textarea class="form-control" id="content" rows="3" name="content" placeholder="Enter your post"
+          required></textarea>
+      </div>
+      <div class="col-auto">
+        <button type="submit" class="btn btn-primary mb-3">Submit Post</button>
+      </div>
+    </form>
+  </section>
 
-<%- include('partials/footer'); -%>
+  <%- include('partials/footer'); -%>
